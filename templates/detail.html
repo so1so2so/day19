@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h1>详细信息</h1>
+    {% for foo in detail %}
+    <input type="checkbox">{{ foo.username }}
+    <h6>密码：{{ foo.passwd }}</h6>
+    {% endfor %}
+    
+</body>
+</html>

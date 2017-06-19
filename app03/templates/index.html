@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .hide{
+            display: none;
+        }
+        .zhezhao{
+            position: fixed;
+            top:0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: black;
+            opacity: 0.6;
+            z-index: 100;
+        }
+        .pop_up_windows{
+            position: fixed;
+            top: 200px;
+            left: 500px;
+            width: 500px;
+            height: 200px;
+            z-index:200;
+            border: 1px solid red;
+            background-color: whitesmoke;
+        }
+    </style>
+</head>
+<body>
+<div><input id="add" type="button" value="增加"></div>
+<div>
+{#    <h1>详细信息</h1>#}
+{#    {% for foo in v1 %}#}
+{#        <span style="display: block;">{{ foo.nid }}__{{ foo.hostname }}__#}
+{#            {{ foo.ip }}__{{ foo.port }}--{{ foo.b.caption }}</span>#}
+{#    {% endfor %}#}
+    <table border="1" style="text-align: center">
+        <thead>
+        <tr>
+{#            <th>主机ID</th>#}
+            <th>主机名</th>
+            <th>IP</th>
+            <th>端口</th>
+            <th>业务线</th>
+{#            <th>业务线ID</th>#}
+{#            <th>业务线编码</th>#}
+        </tr>
+        </thead>
+        <tbody>
+        {% for foo in v1 %}
+       <tr host-id="{{ foo.nid }}">
+            <td>{{ foo.hostname }}</td>
+            <td>{{ foo.ip }}</td>
+            <td>{{ foo.port }}</td>
+            <td>{{ foo.b.caption }}</td>
+{#            <td>{{ foo.b.id }}</td>#}
+{#            <td>{{ foo.b.code }}</td>#}
+        </tr>
+           {% endfor %}
+        </tbody>
+    </table>
+
+</div>
+{#遮罩层#}
+<div class="zhezhao hide"></div>
+{#弹出窗口#}
+<div class="pop_up_windows hide">
+    <form action="/host/" method="post">
+    <div class="group">
+        <input type="text" placeholder="主机名" name="hostname">
+    </div>
+    <div class="group">
+        <input type="text" placeholder="ip" name="ip">
+    </div>
+    <div class="group">
+        <input type="text" placeholder="端口" name="port">
+    </div>
+    <div class="group">
+        <select name="b_id">
+            {% for foo in v4 %}
+             <option value="{{ foo.id }}">{{ foo.caption }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <input type="submit" value="提交">
+    <a id="ajax_submit" style="display: inline-block;padding: 5px;
+    background-color: aquamarine">ajax提交</a>
+    <input id= "off" type="button" value="取消">
+    </form>
+</div>
+<script src="/static/jquery.min.js"></script>
+    <script>
+        $(function () {
+            $('#add').click(function () {
+                $('.zhezhao,.pop_up_windows').removeClass('hide')
+            })
+            $('#off').click(function () {
+                $('.zhezhao,.pop_up_windows').addClass('hide')
+            })
+            $('#ajax_submit').click(function () {
+                $.ajax({
+                    url:"test_ajax",
+                    type:'GET',
+                    data:{'user':'root','pwd':'123456'},
+                    success:function (data) {
+                        alert('date')
+                    }
+
+                })
+            })
+        })
+    </script>
+</body>
+</html>
